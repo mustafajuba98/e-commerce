@@ -17,27 +17,61 @@ const RegisterForm = () => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
+  const regexPatterns = {
+    fullName: /^[a-zA-Z0-9 ]+$/,
+    username: /^[a-z0-9._,-]+$/,
+    email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+  };
+
+  const validateField = (name, value) => {
+    let error = "";
+    if (!value) {
+      return "This field is required";
+    }
+    if (regexPatterns[name] && !regexPatterns[name].test(value)) {
+      switch (name) {
+        case "fullName":
+          error = "Full name can only contain letters, numbers, and spaces";
+          break;
+        case "username":
+          error = "Username can only contain lowercase letters, numbers, ., _, or -";
+          break;
+        case "email":
+          error = "Invalid email format";
+          break;
+        case "password":
+          error = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number";
+          break;
+        default:
+          break;
+      }
+    }
+    return error;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-    setErrors({ ...errors, [name]: "" });
+    let updatedErrors = { ...errors, [name]: validateField(name, value) };
+    
+    if (name === "confirmPassword" && value !== formValues.password) {
+      updatedErrors.confirmPassword = "Passwords do not match";
+    }
+    
+    setErrors(updatedErrors);
   };
 
   const validate = () => {
     const tempErrors = {};
-    if (!formValues.fullName) tempErrors.fullName = "Full name is required";
-    if (!formValues.username) tempErrors.username = "Username is required";
-    if (!formValues.email) tempErrors.email = "Email is required";
-    if (!formValues.password) tempErrors.password = "Password is required";
-    if (formValues.password.length < 8)
-      tempErrors.password = "Must be at least 8 characters";
-    if (!formValues.confirmPassword)
-      tempErrors.confirmPassword = "Confirm your password";
-    if (formValues.confirmPassword !== formValues.password)
+    Object.keys(formValues).forEach((key) => {
+      tempErrors[key] = validateField(key, formValues[key]);
+    });
+    if (formValues.confirmPassword !== formValues.password) {
       tempErrors.confirmPassword = "Passwords do not match";
-
+    }
     setErrors(tempErrors);
-    return Object.keys(tempErrors).length === 0;
+    return Object.keys(tempErrors).every((key) => !tempErrors[key]);
   };
 
   const handleSubmit = (e) => {
@@ -47,16 +81,12 @@ const RegisterForm = () => {
     let users = JSON.parse(localStorage.getItem("userData")) || [];
     const { confirmPassword, ...userData } = formValues;
     
-    const userExists = users.some(user => user.username === userData.username);
-    const emailExists = users.some(user => user.email === userData.email);
-    
-    if (userExists) {
+    if (users.some(user => user.username === userData.username)) {
       setSnackbarMessage("Username already exists!");
       setShowSnackbar(true);
       return;
     }
-    
-    if (emailExists) {
+    if (users.some(user => user.email === userData.email)) {
       setSnackbarMessage("Email already exists!");
       setShowSnackbar(true);
       return;
@@ -69,7 +99,7 @@ const RegisterForm = () => {
     setShowSnackbar(true);
 
     setTimeout(() => {
-      history.push("/login");  // المفروض هحط هنا صفحة اللوجين 
+      history.push("/login");
     }, 2000);
   };
 
@@ -96,7 +126,6 @@ const RegisterForm = () => {
           />
           <InputField
             label="Email"
-            type="email"
             name="email"
             value={formValues.email}
             onChange={handleChange}
@@ -125,11 +154,7 @@ const RegisterForm = () => {
             Register
           </Button>
         </Form>
-        {showSnackbar && (
-          <Alert variant="danger" className="mt-3">
-            {snackbarMessage}
-          </Alert>
-        )}
+        {showSnackbar && <Alert variant="danger" className="mt-3">{snackbarMessage}</Alert>}
       </Card>
     </Container>
   );
