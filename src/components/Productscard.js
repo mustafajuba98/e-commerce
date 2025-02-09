@@ -23,7 +23,7 @@ function ProductsCard() {
                 variant="top"
                 src={product.image}
                 alt={product.title}
-                style={{ height: "200px", objectFit: "contain" }}
+                style={{ height: "400px", objectFit: "contain" }}
               />
               <Card.Body className="d-flex flex-column">
                 <Card.Title className="text-truncate">
