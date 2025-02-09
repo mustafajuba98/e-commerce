@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, Button, Row, Col, Container } from "react-bootstrap";
+import { Card, Button, Row, Col, Container, Pagination } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart, addToWishlist } from "../actions/actions";
+import { FaShoppingCart, FaHeart } from "react-icons/fa";
 
 function ProductsCard() {
   const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
@@ -12,11 +19,21 @@ function ProductsCard() {
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const totalPages = Math.ceil(products.length / productsPerPage);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
-    <Container className="my-5">
+    <Container className="my-5 mb-5">
       <h2 className="text-center mb-4">Our Products</h2>
       <Row className="g-4">
-        {products.map((product) => (
+        {currentProducts.map((product) => (
           <Col key={product.id} xs={12} sm={6} md={4} lg={3}>
             <Card className="h-100 shadow-sm">
               <Card.Img
@@ -33,14 +50,63 @@ function ProductsCard() {
                   {product.description}
                 </Card.Text>
                 <h5 className="text-primary">${product.price}</h5>
-                <Button variant="primary" className="mt-auto">
-                  View Details
-                </Button>
+                <div className="d-flex justify-content-between">
+                  <Button
+                    variant="success"
+                    onClick={() => dispatch(addToCart(product))}
+                  >
+                    <FaShoppingCart /> Add to Cart
+                  </Button>
+                  <Button
+                    variant="outline-danger"
+                    onClick={() => dispatch(addToWishlist(product))}
+                  >
+                    <FaHeart /> Add to Wishlist
+                  </Button>
+                </div>
+                <Link to={`/product/${product.id}`}>
+                  <Button variant="primary" className="mt-2">
+                    View Details
+                  </Button>
+                </Link>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
+
+
+{/* حتة البجينيشن لازم بعد الكارد علشان تظهر تحت خالص في اخر الصفحة */}
+
+      {totalPages > 1 && (
+        <Pagination className="justify-content-center mt-4">
+          <Pagination.First
+            onClick={() => paginate(1)}
+            disabled={currentPage === 1}
+          />
+          <Pagination.Prev
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[...Array(totalPages)].map((_, index) => (
+            <Pagination.Item
+              key={index + 1}
+              active={index + 1 === currentPage}
+              onClick={() => paginate(index + 1)}
+            >
+              {index + 1}
+            </Pagination.Item>
+          ))}
+          <Pagination.Next
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          />
+          <Pagination.Last
+            onClick={() => paginate(totalPages)}
+            disabled={currentPage === totalPages}
+          />
+        </Pagination>
+      )}
     </Container>
   );
 }

@@ -1,13 +1,7 @@
 import React from "react";
-import ProductsCard from "../components/Productscard";
-
+import LandingPageSimple from "../pages/LandingPage";
 function Home() {
-  return (
-    <div>
-      <h1 className="text-center my-4">Welcome to Our Store</h1>
-      <ProductsCard /> 
-    </div>
-  );
+  return <LandingPageSimple />;
 }
 
 export default Home;

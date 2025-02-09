@@ -16,7 +16,7 @@ const Footer = () => {
     >
       <Container>
         <p>
-          &copy; {new Date().getFullYear()} Your Website. All Rights Reserved.
+          &copy; {new Date().getFullYear()} E-Commercia. All Rights Reserved.
         </p>
       </Container>
     </footer>

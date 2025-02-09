@@ -10,17 +10,33 @@ function NavScrollExample() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand as={Link} to="/">E Commerce</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          E Commerce
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" navbarScroll>
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/products">Products</Nav.Link>
+            <Nav.Link as={Link} to="/">
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/products">
+              Products
+            </Nav.Link>
+            {/* مش لاقي الايقونة هعملها كدة مؤقتا */}
+            <Nav.Link as={Link} to="/Addedtocart">
+              MyCart 🛒{" "}
+            </Nav.Link>
             <NavDropdown title="Categories" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={Link} to="/category/electronics">Electronics</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/category/clothing">Clothing</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/category/electronics">
+                Electronics
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/category/clothing">
+                Clothing
+              </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to="/offers">Special Offers</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/offers">
+                Special Offers
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
 
@@ -35,10 +51,13 @@ function NavScrollExample() {
           </Form>
 
           <div className="d-flex gap-2">
-            <Button as={Link} to="/login" variant="outline-primary">Login</Button>
-            <Button as={Link} to="/logout" variant="outline-danger">Logout</Button>
+            <Button as={Link} to="/login" variant="outline-primary">
+              Login
+            </Button>
+            <Button as={Link} to="/logout" variant="outline-danger">
+              Logout
+            </Button>
           </div>
-
         </Navbar.Collapse>
       </Container>
     </Navbar>
