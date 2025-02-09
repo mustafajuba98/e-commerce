@@ -1,5 +1,8 @@
-const Products = () => {
-    return <h1>Products Page</h1>;
-  };
-  export default Products;
-  
+import React from "react";
+import ProductsCard from "../components/Productscard";
+
+function Products() {
+  return <ProductsCard />;
+}
+
+export default Products;
