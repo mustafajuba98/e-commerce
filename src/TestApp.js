@@ -8,6 +8,7 @@ import NotFound from "./pages/notfound";
 import Footer from "./components/footer";
 import ProductDetails from "./components/ProductDetails";
 import addedtocart from "./pages/addedtocart";
+import LoginForm from "./pages/Login";
 function TestApp() {
   return (
     <Router>
@@ -17,6 +18,7 @@ function TestApp() {
         <Route exact path="/products" component={Products} />
         <Route exact path="/product/:id" component={ProductDetails} />
         <Route exact path="/category/:categoryName" component={Category} />
+        <Route exact path="/Login" component={LoginForm} />
 		
         <Route exact path="/offers" component={Offers} />
         <Route exact path="/addedtocart" component={addedtocart} />
