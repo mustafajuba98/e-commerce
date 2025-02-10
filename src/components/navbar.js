@@ -51,7 +51,7 @@ function NavScrollExample() {
           </Form>
 
           <div className="d-flex gap-2">
-            <Button as={Link} to="/login" variant="outline-primary">
+            <Button as={Link} to="/Login" variant="outline-primary">
               Login
             </Button>
             <Button as={Link} to="/logout" variant="outline-danger">
