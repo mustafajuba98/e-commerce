@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom"; 
-import image from "../Images/1.jpg";
+import image from "../Images/3.jpg";
 
 function LandingPageOverlay() {
   const history = useHistory();

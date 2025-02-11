@@ -69,9 +69,11 @@ const LoginForm = () => {
 
     setTimeout(() => {
       history.push("/");
-    }, 2000);
-  };
-
+    }, 1000);
+    // const handleRegisterClick = () => {
+    //   history.push("/register");
+    // };
+  }
   return (
 
 
@@ -122,9 +124,10 @@ const LoginForm = () => {
 
         <div className="mb-3"></div>
         <div className="mb-3">
-          <button className="btn btn-light w-100 border " id="link">
-            <a href="sign up.html" className="text-dark w-100 fw-bold  fs-5 text-decoration-none">Create your  account</a>
-          </button>
+         
+         <Link to="/register" className="btn btn-light w-100 border fw-bold fs-5 text-dark text-decoration-none">
+            Create your account
+          </Link>
         </div>
 
         <div className="text-center mt-4" style={{ fontsize: '12px' }}>
