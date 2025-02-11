@@ -1,24 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import AdminPanel from './pages/admin-panel';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import ProductsTable from './pages/productsTable';
+import ProductDetails from './pages/productDetails';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className='container pt-3 pb-3'>
+        <Switch>
+          <Route path="/admin" component={AdminPanel} exact />
+          <Route path="/products" component={ProductsTable} exact />
+          <Route path="/products/:productId" component={ProductDetails} exact />
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
 
