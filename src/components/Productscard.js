@@ -78,16 +78,14 @@ function ProductsCard() {
 
 {/* حتة البجينيشن لازم بعد الكارد علشان تظهر تحت خالص في اخر الصفحة */}
 
-      {totalPages > 1 && (
+{totalPages > 1 && (
         <Pagination className="justify-content-center mt-4">
-          <Pagination.First
-            onClick={() => paginate(1)}
-            disabled={currentPage === 1}
-          />
           <Pagination.Prev
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
-          />
+          >
+            Previous
+          </Pagination.Prev>
           {[...Array(totalPages)].map((_, index) => (
             <Pagination.Item
               key={index + 1}
@@ -100,13 +98,13 @@ function ProductsCard() {
           <Pagination.Next
             onClick={() => paginate(currentPage + 1)}
             disabled={currentPage === totalPages}
-          />
-          <Pagination.Last
-            onClick={() => paginate(totalPages)}
-            disabled={currentPage === totalPages}
-          />
+          >
+            Next
+          </Pagination.Next>
         </Pagination>
       )}
+
+     
     </Container>
   );
 }
