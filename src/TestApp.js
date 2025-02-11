@@ -5,10 +5,11 @@ import Products from "./pages/Products";
 import Category from "./pages/Category";
 import Offers from "./pages/Offers";
 import NotFound from "./pages/notfound";
-import Footer from "./components/footer";
+import Footer from './components/footer'
 import ProductDetails from "./components/ProductDetails";
 import addedtocart from "./pages/addedtocart";
 import LoginForm from "./pages/Login";
+import RegisterForm from './pages/register'
 function TestApp() {
   return (
     <Router>
@@ -19,12 +20,13 @@ function TestApp() {
         <Route exact path="/product/:id" component={ProductDetails} />
         <Route exact path="/category/:categoryName" component={Category} />
         <Route exact path="/Login" component={LoginForm} />
+        <Route exact path="/register" component={RegisterForm} />
 		
         <Route exact path="/offers" component={Offers} />
         <Route exact path="/addedtocart" component={addedtocart} />
         <Route component={NotFound} />
       </Switch>
-      <Footer></Footer>
+      <Footer/>
     </Router>
   );
 }

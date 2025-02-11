@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Card, Alert } from "react-bootstrap";
 import InputField from "../components/Inputfield";
-import { useHistory } from "react-router-dom";
+import { useHistory,Link } from "react-router-dom";
 
 const RegisterForm = () => {
   const history = useHistory();
@@ -16,6 +16,10 @@ const RegisterForm = () => {
   const [errors, setErrors] = useState({});
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [alertVariant, setAlertVariant] = useState("danger");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setconfirmPasswordVisible] = useState(false);
+
 
   const regexPatterns = {
     fullName: /^[a-zA-Z0-9 ]+$/,
@@ -54,11 +58,11 @@ const RegisterForm = () => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
     let updatedErrors = { ...errors, [name]: validateField(name, value) };
-    
+
     if (name === "confirmPassword" && value !== formValues.password) {
       updatedErrors.confirmPassword = "Passwords do not match";
     }
-    
+
     setErrors(updatedErrors);
   };
 
@@ -80,7 +84,7 @@ const RegisterForm = () => {
 
     let users = JSON.parse(localStorage.getItem("userData")) || [];
     const { confirmPassword, ...userData } = formValues;
-    
+
     if (users.some(user => user.username === userData.username)) {
       setSnackbarMessage("Username already exists!");
       setShowSnackbar(true);
@@ -88,25 +92,28 @@ const RegisterForm = () => {
     }
     if (users.some(user => user.email === userData.email)) {
       setSnackbarMessage("Email already exists!");
+      setAlertVariant("danger");
       setShowSnackbar(true);
       return;
     }
-    
+
     users.push(userData);
     localStorage.setItem("userData", JSON.stringify(users));
 
     setSnackbarMessage("Registration successful!");
+    setAlertVariant("success");
     setShowSnackbar(true);
 
     setTimeout(() => {
-      history.push("/login");
+      history.push("/");
     }, 2000);
   };
 
   return (
     <Container className="my-5 d-flex justify-content-center">
       <Card className="shadow p-4" style={{ maxWidth: "500px", width: "100%" }}>
-        <h3 className="text-center mb-4">Register</h3>
+        {showSnackbar && <Alert variant={alertVariant} className="mb-4">{snackbarMessage}</Alert>}
+        <h2 className="text-center mb-4 fw-bold fs-3">Register</h2>
         <Form onSubmit={handleSubmit}>
           <InputField
             label="Full Name"
@@ -134,27 +141,46 @@ const RegisterForm = () => {
           />
           <InputField
             label="Password"
-            type="password"
+            type={passwordVisible ? "text" : "password"}
             name="password"
             value={formValues.password}
             onChange={handleChange}
             isInvalid={Boolean(errors.password)}
             feedback={errors.password}
+            showPasswordToggle
+            onPasswordToggle={() => setPasswordVisible(!passwordVisible)}
           />
+         <br />
           <InputField
             label="Confirm Password"
-            type="password"
+            type={confirmPasswordVisible ? "text" : "password"}
             name="confirmPassword"
             value={formValues.confirmPassword}
             onChange={handleChange}
             isInvalid={Boolean(errors.confirmPassword)}
             feedback={errors.confirmPassword}
+            showPasswordToggle
+            onPasswordToggle={() => setconfirmPasswordVisible(!confirmPasswordVisible)}
           />
-          <Button variant="primary" type="submit" className="w-100 mt-3">
+          <Button variant="primary" type="submit" className="w-100 mt-3 fw-bold fs-3">
             Register
           </Button>
         </Form>
-        {showSnackbar && <Alert variant="danger" className="mt-3">{snackbarMessage}</Alert>}
+        <div className="mb-3"></div>
+        <div className="d-flex align-items-center mb-3">
+                  <hr className="flex-grow-1" />
+                  <span className="mx-3">I already have an account</span>
+                  <hr className="flex-grow-1" />
+                </div>
+        
+                <div className="mb-3"></div>
+                <div className="mb-3">
+                 
+                 <Link to="/Login" className="btn btn-light w-100 border fw-bold fs-5 text-dark text-decoration-none">
+                    Login
+                  </Link>
+                </div>
+        {/* {showSnackbar && <Alert variant="danger" className="mt-3">{snackbarMessage}</Alert>} */}
       </Card>
     </Container>
   );

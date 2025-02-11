@@ -1,26 +1,91 @@
+// import React from "react";
+// import { Container } from "react-bootstrap";
+
+// const Footer = () => {
+//   return (
+//     <footer
+//       style={{
+//         backgroundColor: "#000",
+//         color: "#fff",
+//         padding: "1px 0",
+//         textAlign: "center",
+//         position: "fixed",
+//         bottom: 0,
+//         width: "100%",
+//       }}
+//     >
+//       <Container>
+//         <p>
+//           &copy; {new Date().getFullYear()} E-Commercia. All Rights Reserved.
+//         </p>
+//       </Container>
+//     </footer>
+//   );
+// };
+
+// export default Footer;
+
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer
-      style={{
-        backgroundColor: "#000",
-        color: "#fff",
-        padding: "1px 0",
-        textAlign: "center",
-        position: "fixed",
-        bottom: 0,
-        width: "100%",
-      }}
-    >
+    <footer className="bg-dark text-light py-4 mt-5">
       <Container>
-        <p>
-          &copy; {new Date().getFullYear()} E-Commercia. All Rights Reserved.
-        </p>
+        <Row className="text-center text-md-start">
+          {/* Company Info */}
+          <Col md={3} className="mb-3">
+            <h5 className="fw-bold">E-Commerce</h5>
+            <p>Discover the best deals and latest trends at unbeatable prices.</p>
+          </Col>
+
+          {/* Quick Links */}
+          <Col md={3} className="mb-3">
+            <h5 className="fw-bold">Quick Links</h5>
+            <ul className="list-unstyled">
+              <li><Link to="/about" className="text-light text-decoration-none">About Us</Link></li>
+              <li><Link to="/shop" className="text-light text-decoration-none">Shop</Link></li>
+              <li><Link to="/contact" className="text-light text-decoration-none">Contact</Link></li>
+              <li><Link to="/faq" className="text-light text-decoration-none">FAQ</Link></li>
+            </ul>
+          </Col>
+
+          {/* Customer Service */}
+          <Col md={3} className="mb-3">
+            <h5 className="fw-bold">Customer Service</h5>
+            <ul className="list-unstyled">
+              <li><Link to="/returns" className="text-light text-decoration-none">Returns</Link></li>
+              <li><Link to="/shipping" className="text-light text-decoration-none">Shipping Info</Link></li>
+              <li><Link to="/privacy" className="text-light text-decoration-none">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="text-light text-decoration-none">Terms & Conditions</Link></li>
+            </ul>
+          </Col>
+
+          {/* Social Media */}
+          <Col md={3} className="mb-3">
+            <h5 className="fw-bold">Follow Us</h5>
+            <div className="d-flex gap-3">
+              <a href="https://facebook.com" className="text-light fs-4"><FaFacebook /></a>
+              <a href="https://twitter.com" className="text-light fs-4"><FaTwitter /></a>
+              <a href="https://instagram.com" className="text-light fs-4"><FaInstagram /></a>
+              <a href="https://linkedin.com" className="text-light fs-4"><FaLinkedin /></a>
+            </div>
+          </Col>
+        </Row>
+
+        {/* Copyright Section */}
+        <Row className="mt-3">
+          <Col className="text-center">
+            <p className="mb-0">&copy; {new Date().getFullYear()} E-Commercia. All Rights Reserved.</p>
+          </Col>
+        </Row>
       </Container>
+      
     </footer>
   );
 };
 
 export default Footer;
+
