@@ -1,3 +1,7 @@
+
+
+
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, Button, Row, Col, Container, Pagination } from "react-bootstrap";
@@ -5,12 +9,13 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart, addToWishlist } from "../actions/actions";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
-
+import { useSearch } from "../reducers/searchContext"; // استيراد الكونسيت
 function ProductsCard() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
   const dispatch = useDispatch();
+  const { searchTerm } = useSearch(); // الحصول على نص البحث من الكونسيت
 
   useEffect(() => {
     axios
@@ -19,14 +24,18 @@ function ProductsCard() {
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
+  const filteredProducts = products.filter((product) => {
+    return product.title.toLowerCase().includes(searchTerm.toLowerCase()); // تصفية المنتجات بناءً على نص البحث
+  });
+
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(
+  const currentProducts = filteredProducts.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
 
-  const totalPages = Math.ceil(products.length / productsPerPage);
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -75,10 +84,7 @@ function ProductsCard() {
         ))}
       </Row>
 
-
-{/* حتة البجينيشن لازم بعد الكارد علشان تظهر تحت خالص في اخر الصفحة */}
-
-{totalPages > 1 && (
+      {totalPages > 1 && (
         <Pagination className="justify-content-center mt-4">
           <Pagination.Prev
             onClick={() => paginate(currentPage - 1)}
@@ -103,8 +109,6 @@ function ProductsCard() {
           </Pagination.Next>
         </Pagination>
       )}
-
-     
     </Container>
   );
 }
