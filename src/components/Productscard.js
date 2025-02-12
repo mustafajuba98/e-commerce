@@ -14,7 +14,7 @@ function ProductsCard() {
 
   useEffect(() => {
     axios
-      .get("https://fakestoreapi.com/products")
+      .get("https://salesprogrow.com/products/")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
@@ -55,16 +55,16 @@ function ProductsCard() {
                     variant="success"
                     onClick={() => dispatch(addToCart(product))}
                   >
-                    <FaShoppingCart /> Add to Cart
+                    <FaShoppingCart />
                   </Button>
                   <Button
                     variant="outline-danger"
                     onClick={() => dispatch(addToWishlist(product))}
                   >
-                    <FaHeart /> Add to Wishlist
+                    <FaHeart />
                   </Button>
                 </div>
-                <Link to={`/product/${product.id}`}>
+                <Link to={`/products/${product.id}`}>
                   <Button variant="primary" className="mt-2">
                     View Details
                   </Button>
@@ -78,16 +78,14 @@ function ProductsCard() {
 
 {/* حتة البجينيشن لازم بعد الكارد علشان تظهر تحت خالص في اخر الصفحة */}
 
-      {totalPages > 1 && (
+{totalPages > 1 && (
         <Pagination className="justify-content-center mt-4">
-          <Pagination.First
-            onClick={() => paginate(1)}
-            disabled={currentPage === 1}
-          />
           <Pagination.Prev
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
-          />
+          >
+            Previous
+          </Pagination.Prev>
           {[...Array(totalPages)].map((_, index) => (
             <Pagination.Item
               key={index + 1}
@@ -100,13 +98,13 @@ function ProductsCard() {
           <Pagination.Next
             onClick={() => paginate(currentPage + 1)}
             disabled={currentPage === totalPages}
-          />
-          <Pagination.Last
-            onClick={() => paginate(totalPages)}
-            disabled={currentPage === totalPages}
-          />
+          >
+            Next
+          </Pagination.Next>
         </Pagination>
       )}
+
+     
     </Container>
   );
 }
