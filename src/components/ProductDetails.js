@@ -4,15 +4,15 @@ import axios from "axios";
 import { Container, Card, Button } from "react-bootstrap";
 
 function ProductDetails() {
-  const { id } = useParams(); 
-  const history = useHistory(); 
+  const { id } = useParams();
+  const history = useHistory();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     axios
-      .get(`https://fakestoreapi.com/products/${id}`)
+      .get(`https://salesprogrow.com/products/${id}`)
       .then((response) => {
         if (response.data) {
           setProduct(response.data);
