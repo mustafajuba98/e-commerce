@@ -1,3 +1,6 @@
+
+
+
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -5,8 +8,23 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
+import { useSearch } from "../reducers/searchContext"; // استيراد الكونسيت
+import { useState } from "react";
 
 function NavScrollExample() {
+  const { searchTerm, setSearchTerm } = useSearch(); // الوصول إلى searchTerm و setSearchTerm من الكونسيت
+  const [query, setQuery] = useState(""); // حالة محلية لتخزين النص المدخل
+
+  // عندما يتغير النص في الـ input
+  const handleSearchChange = (e) => {
+    setQuery(e.target.value); 
+  };
+
+  // عند الضغط على زر البحث، سيتم تحديث حالة البحث العالمية
+  const handleSearchClick = () => {
+    setSearchTerm(query); // تحديث حالة البحث في الكونسيت
+  };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
@@ -22,9 +40,8 @@ function NavScrollExample() {
             <Nav.Link as={Link} className=" active fs-5" to="/products">
               Products
             </Nav.Link>
-            {/* مش لاقي الايقونة هعملها كدة مؤقتا */}
-            <Nav.Link as={Link}  className=" active fs-5" to="/Addedtocart">
-              MyCart 🛒{" "}
+            <Nav.Link as={Link} className=" active fs-5" to="/Addedtocart">
+              MyCart 🛒
             </Nav.Link>
             <NavDropdown title="Categories" id="navbarScrollingDropdown" className=" active fs-5">
               <NavDropdown.Item as={Link} to="/category/electronics" className=" active fs-5">
@@ -46,15 +63,19 @@ function NavScrollExample() {
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              value={query} // عرض النص المدخل في الـ input
+              onChange={handleSearchChange} // تحديث النص المدخل
             />
-            <Button variant="outline-success" className="  fs-5">Search</Button>
+            <Button variant="outline-success" className=" fs-5" onClick={handleSearchClick}>
+              Search
+            </Button>
           </Form>
 
           <div className="d-flex gap-2">
-            <Button as={Link} to="/Login" variant="outline-primary" className="  fs-5">
+            <Button as={Link} to="/Login" variant="outline-primary" className=" fs-5">
               Login
             </Button>
-            <Button as={Link} to="/logout" variant="outline-danger" className="  fs-5">
+            <Button as={Link} to="/logout" variant="outline-danger" className=" fs-5">
               Logout
             </Button>
           </div>
