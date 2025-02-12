@@ -10,21 +10,24 @@ import Category from "./pages/Category";
 import Offers from "./pages/Offers";
 import NotFound from "./pages/notfound";
 import Footer from "./components/footer";
-import addedtocart from "./pages/addedtocart";
+import ShoppingCart from "./pages/shoppingCart";
 import LoginForm from "./pages/Login";
 import RegisterForm from "./pages/register";
 import ProductCreate from "./pages/productCreate";
 import ProductUpdate from "./pages/productUpdate";
+import { SearchProvider } from "./reducers/searchContext";
+
 
 function App() {
   return (
     <BrowserRouter>
+    <SearchProvider>
       <Navbar />
 
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/admin" component={AdminPanel} exact />
-        <Route path="/admin/products" component={ProductsTable} exact />
+          <Route path="/admin" component={ProductsTable} exact />
+        {/* <Route path="/admin/products" component={ProductsTable} exact /> */}
         <Route exact path="/products" component={Products} />
         <Route exact path="/products/create" component={ProductCreate} />
         <Route path="/products/update/:id" component={ProductUpdate} />
@@ -34,11 +37,12 @@ function App() {
         <Route exact path="/register" component={RegisterForm} />
 
         <Route exact path="/offers" component={Offers} />
-        <Route exact path="/addedtocart" component={addedtocart} />
+        <Route exact path="/cart" component={ShoppingCart} />
         <Route component={NotFound} />
       </Switch>
 
       <Footer />
+      </SearchProvider>
     </BrowserRouter>
   );
 }

@@ -105,8 +105,8 @@ const RegisterForm = () => {
     setShowSnackbar(true);
 
     setTimeout(() => {
-      history.push("/");
-    }, 2000);
+      history.push("/login");
+    }, 1000);
   };
 
   return (
