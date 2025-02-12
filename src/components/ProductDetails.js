@@ -1,12 +1,11 @@
-// src/components/ProductDetails.js
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import { Container, Card, Button } from "react-bootstrap";
 
 function ProductDetails() {
-  const { id } = useParams(); // استخراج id من الرابط
-  const history = useHistory(); // استخدام useHistory (في حالة استخدام React Router v5)
+  const { id } = useParams(); 
+  const history = useHistory(); 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
