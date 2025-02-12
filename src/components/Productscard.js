@@ -14,7 +14,7 @@ function ProductsCard() {
 
   useEffect(() => {
     axios
-      .get("https://fakestoreapi.com/products")
+      .get("https://salesprogrow.com/products/")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
@@ -55,16 +55,16 @@ function ProductsCard() {
                     variant="success"
                     onClick={() => dispatch(addToCart(product))}
                   >
-                    <FaShoppingCart /> Add to Cart
+                    <FaShoppingCart />
                   </Button>
                   <Button
                     variant="outline-danger"
                     onClick={() => dispatch(addToWishlist(product))}
                   >
-                    <FaHeart /> Add to Wishlist
+                    <FaHeart />
                   </Button>
                 </div>
-                <Link to={`/product/${product.id}`}>
+                <Link to={`/products/${product.id}`}>
                   <Button variant="primary" className="mt-2">
                     View Details
                   </Button>

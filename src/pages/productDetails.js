@@ -9,15 +9,15 @@ function ProductDetails() {
 	const params = useParams();
 	const [product, setProduct] = useState([])
 	useEffect(() => {
-		// const userData = JSON.parse(localStorage.getItem("userData"));
+		const userData = JSON.parse(localStorage.getItem("userData"));
 
 		// if (!userData || !userData.isAdmin) {
 		// 	history.push("/login");
 		// }
-	}, [history]);
+	}, []);
 
 	useEffect(() => {
-		axios.get('https://dummyjson.com/products/'+params.productId)
+		axios.get('https://salesprogrow.com/products/'+params.id)
 			.then((response) => setProduct(response.data))
 			.catch((err) => console.log(err))
 	}, []);
