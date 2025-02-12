@@ -15,31 +15,34 @@ import LoginForm from "./pages/Login";
 import RegisterForm from "./pages/register";
 import ProductCreate from "./pages/productCreate";
 import ProductUpdate from "./pages/productUpdate";
+import { SearchProvider } from "./reducers/searchContext";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
+    <SearchProvider>
+      <BrowserRouter>
+        <Navbar />
 
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/admin" component={AdminPanel} exact />
-        <Route path="/admin/products" component={ProductsTable} exact />
-        <Route exact path="/products" component={Products} />
-        <Route exact path="/products/create" component={ProductCreate} />
-        <Route path="/products/update/:id" component={ProductUpdate} />
-        <Route exact path="/products/:id" component={ProductDetails} />
-        <Route exact path="/category/:categoryName" component={Category} />
-        <Route exact path="/Login" component={LoginForm} />
-        <Route exact path="/register" component={RegisterForm} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/admin" component={AdminPanel} exact />
+          <Route path="/admin/products" component={ProductsTable} exact />
+          <Route exact path="/products" component={Products} />
+          <Route exact path="/products/create" component={ProductCreate} />
+          <Route path="/products/update/:id" component={ProductUpdate} />
+          <Route exact path="/products/:id" component={ProductDetails} />
+          <Route exact path="/category/:categoryName" component={Category} />
+          <Route exact path="/Login" component={LoginForm} />
+          <Route exact path="/register" component={RegisterForm} />
 
-        <Route exact path="/offers" component={Offers} />
-        <Route exact path="/addedtocart" component={addedtocart} />
-        <Route component={NotFound} />
-      </Switch>
+          <Route exact path="/offers" component={Offers} />
+          <Route exact path="/addedtocart" component={addedtocart} />
+          <Route component={NotFound} />
+        </Switch>
 
-      <Footer />
-    </BrowserRouter>
+        <Footer />
+      </BrowserRouter>
+    </SearchProvider>
   );
 }
 

@@ -8,21 +8,21 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
-import { useSearch } from "../reducers/searchContext"; // استيراد الكونسيت
+import { useSearch } from "../reducers/searchContext"; 
 import { useState } from "react";
 
 function NavScrollExample() {
-  const { searchTerm, setSearchTerm } = useSearch(); // الوصول إلى searchTerm و setSearchTerm من الكونسيت
-  const [query, setQuery] = useState(""); // حالة محلية لتخزين النص المدخل
+  const { searchTerm, setSearchTerm } = useSearch(); 
+  const [query, setQuery] = useState(""); 
 
-  // عندما يتغير النص في الـ input
+
   const handleSearchChange = (e) => {
     setQuery(e.target.value); 
   };
 
-  // عند الضغط على زر البحث، سيتم تحديث حالة البحث العالمية
+  
   const handleSearchClick = () => {
-    setSearchTerm(query); // تحديث حالة البحث في الكونسيت
+    setSearchTerm(query); 
   };
 
   return (
@@ -44,14 +44,15 @@ function NavScrollExample() {
               MyCart 🛒
             </Nav.Link>
             <NavDropdown title="Categories" id="navbarScrollingDropdown" className=" active fs-5">
-              <NavDropdown.Item as={Link} to="/category/electronics" className=" active fs-5">
+              <NavDropdown.Item as={Link} to="/category/electronics" className="  fs-5">
                 Electronics
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/category/clothing" className=" active fs-5">
+              <NavDropdown.Divider />
+              <NavDropdown.Item as={Link} to="/category/clothing" className="  fs-5">
                 Clothing
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to="/offers" className=" active fs-5">
+              <NavDropdown.Item as={Link} to="/offers" className="  fs-5">
                 Special Offers
               </NavDropdown.Item>
             </NavDropdown>
@@ -63,8 +64,8 @@ function NavScrollExample() {
               placeholder="Search"
               className="me-2"
               aria-label="Search"
-              value={query} // عرض النص المدخل في الـ input
-              onChange={handleSearchChange} // تحديث النص المدخل
+              value={query} 
+              onChange={handleSearchChange} 
             />
             <Button variant="outline-success" className=" fs-5" onClick={handleSearchClick}>
               Search
