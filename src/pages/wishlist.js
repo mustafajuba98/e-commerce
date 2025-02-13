@@ -101,7 +101,7 @@ function Wishlist() {
 				</Modal.Footer>
 			</Modal>
 
-			{/* Clear Wishlist Confirmation Modal */}
+			{/* Clear Wishlist  */}
 			<Modal show={showClearModal} onHide={() => setShowClearModal(false)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Clear Wishlist</Modal.Title>

@@ -16,7 +16,6 @@ const initialState = {
   wishlist: {},
 };
 
-// Cart Reducer
 export const cartReducer = (state = initialState.cart, action) => {
   const username = JSON.parse(localStorage.getItem("loginSession"))?.username;
   if (!username) return state;
@@ -44,7 +43,6 @@ export const cartReducer = (state = initialState.cart, action) => {
   }
 };
 
-// Wishlist Reducer
 export const wishlistReducer = (state = initialState.wishlist, action) => {
   const username = JSON.parse(localStorage.getItem("loginSession"))?.username || "guest";
   let updatedState = { ...state };
@@ -56,7 +54,7 @@ export const wishlistReducer = (state = initialState.wishlist, action) => {
       updatedState[username] = updatedWishlist;
       localStorage.setItem(`wishlist_${username}`, JSON.stringify(updatedWishlist));
 
-      return { ...updatedState }; // Ensure Redux updates
+      return { ...updatedState }; 
 
     case REMOVE_FROM_WISHLIST:
       updatedState[username] = (state[username] || []).filter(item => item.id !== action.payload.id);

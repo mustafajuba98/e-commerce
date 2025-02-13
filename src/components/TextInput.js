@@ -1,4 +1,3 @@
-// EmailComponent.js
 import Feedback from "./Feedback";
 
 

@@ -2,7 +2,7 @@ import "./App.css";
 import AdminPanel from "./pages/admin-panel";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ProductsTable from "./pages/productsTable";
-import ProductDetails from "./pages/productDetails";
+import ProductDetails from "./components/ProductDetails";
 import Navbar from "./components/navbar";
 import Home from "./pages/Home";
 import Products from "./pages/Products";

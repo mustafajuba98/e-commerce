@@ -28,7 +28,6 @@ function AdminBtn({ text, color, productId, onDelete }) {
 						{text}
 					</button>
 
-					{/* Bootstrap Confirmation Modal */}
 					<div className={`modal fade ${showModal ? "show d-block" : ""}`} tabIndex="-1" role="dialog">
 						<div className="modal-dialog" role="document">
 							<div className="modal-content">

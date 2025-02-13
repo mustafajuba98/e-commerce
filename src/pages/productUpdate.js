@@ -6,7 +6,7 @@ import TextInput from "../components/TextInput";
 
 function ProductUpdate() {
 	const history = useHistory();
-	const { id } = useParams(); // Get product ID from the URL
+	const { id } = useParams(); 
 	const [productData, setProductData] = useState({
 		title: "",
 		description: "",
@@ -75,7 +75,7 @@ function ProductUpdate() {
 				image,
 			})
 			.then(() => {
-				history.push("/admin"); // Redirect after successful update
+				history.push("/admin"); 
 			})
 			.catch((err) => console.log(err));
 	}
@@ -164,7 +164,6 @@ function ProductUpdate() {
 							type="submit"
 							className="btn btn-success"
 							disabled={!formValid} 
-							// problem button is disabled on start
 						>
 							Save
 						</button>

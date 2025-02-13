@@ -180,7 +180,6 @@ const RegisterForm = () => {
                     Login
                   </Link>
                 </div>
-        {/* {showSnackbar && <Alert variant="danger" className="mt-3">{snackbarMessage}</Alert>} */}
       </Card>
     </Container>
   );

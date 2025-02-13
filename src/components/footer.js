@@ -28,19 +28,16 @@ const Footer = () => {
   return (
     <div style={containerStyle}>
       <div style={contentStyle}>
-        {/* محتوى الصفحة */}
       </div>
 
       <footer style={footerStyle}>
         <Container>
           <Row className="text-center text-md-start">
-            {/* Company Info */}
             <Col md={3} className="mb-3">
               <h5 className="fw-bold">E-Commerce</h5>
               <p>Discover the best deals and latest trends at unbeatable prices.</p>
             </Col>
 
-            {/* Quick Links */}
             <Col md={3} className="mb-3">
               <h5 className="fw-bold">Quick Links</h5>
               <ul className="list-unstyled">
@@ -51,7 +48,6 @@ const Footer = () => {
               </ul>
             </Col>
 
-            {/* Customer Service */}
             <Col md={3} className="mb-3">
               <h5 className="fw-bold">Customer Service</h5>
               <ul className="list-unstyled">
@@ -62,7 +58,6 @@ const Footer = () => {
               </ul>
             </Col>
 
-            {/* Social Media */}
             <Col md={3} className="mb-3">
               <h5 className="fw-bold">Follow Us</h5>
               <div className="d-flex gap-3">
@@ -74,7 +69,6 @@ const Footer = () => {
             </Col>
           </Row>
 
-          {/* Copyright Section */}
           <Row className="mt-3">
             <Col className="text-center">
               <p className="mb-0">&copy; {new Date().getFullYear()} E-Commercia. All Rights Reserved.</p>

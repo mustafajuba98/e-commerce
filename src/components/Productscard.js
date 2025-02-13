@@ -22,7 +22,7 @@ function ProductsCard() {
   const dispatch = useDispatch();
   const { searchTerm } = useSearch();
 
-  const userKey = username || "guest"; // Use guest if not logged in
+  const userKey = username || "guest"; 
   const wishlist = useSelector((state) => state.wishlist[userKey] || []);
   const cart = useSelector((state) => state.cart[username] || []);
 
@@ -88,25 +88,23 @@ function ProductsCard() {
     const productExists = cart.some((item) => item.id === product.id);
 
     if (productExists) {
-      showToastNotification(`${ product.title } is already in your cart!`, "danger");
+      showToastNotification(`${product.title} is already in your cart!`, "danger");
     } else {
       dispatch(addToCart(product));
-      showToastNotification(`${ product.title } added to cart!`, "success");
+      showToastNotification(`${product.title} added to cart!`, "success");
     }
   };
 
   const handleAddToWishlist = (product) => {
     const username = JSON.parse(localStorage.getItem("loginSession"))?.username || "guest";
 
-    // Check Redux store first
     const productExists = wishlist.some((item) => item.id === product.id);
 
     if (productExists) {
-      showToastNotification(`${ product.title } is already in your wishlist!`, "warning");
+      showToastNotification(`${product.title} is already in your wishlist!`, "warning");
       return;
     }
 
-    // Dispatch action
     dispatch({
       type: ADD_TO_WISHLIST,
       payload: {
@@ -117,12 +115,11 @@ function ProductsCard() {
       },
     });
 
-    // Update localStorage
-    const existingWishlist = JSON.parse(localStorage.getItem(`wishlist_${ username }`)) || [];
+    const existingWishlist = JSON.parse(localStorage.getItem(`wishlist_${username}`)) || [];
     const updatedWishlist = [...existingWishlist, product];
-    localStorage.setItem(`wishlist_${ username }`, JSON.stringify(updatedWishlist));
+    localStorage.setItem(`wishlist_${username}`, JSON.stringify(updatedWishlist));
 
-    showToastNotification(`${ product.title } added to wishlist!`, "success");
+    showToastNotification(`${product.title} added to wishlist!`, "success");
   };
 
   const handleCloseModal = () => setShowModal(false);
@@ -213,12 +210,12 @@ function ProductsCard() {
                   </Button>
                 </div>
                 <Link to={`/products/${product.id}`}>
-                <Button variant="primary" className="mt-2">
-                  View Details
-                </Button>
-              </Link>
-            </Card.Body>
-          </Card>
+                  <Button variant="primary" className="mt-2">
+                    View Details
+                  </Button>
+                </Link>
+              </Card.Body>
+            </Card>
           </Col>
         ))}
       </Row>
@@ -256,17 +253,30 @@ function ProductsCard() {
                   </Button>
                 </div>
                 <Link to={`/products/${product.id}`}>
-                <Button variant="primary" className="mt-2">
-                  View Details
-                </Button>
-              </Link>
-            </Card.Body>
-          </Card>
+                  <Button variant="primary" className="mt-2">
+                    View Details
+                  </Button>
+                </Link>
+              </Card.Body>
+            </Card>
           </Col>
         ))}
       </Row >
 
+      {/* Pagination */}
       <Pagination>
+        <Pagination.Prev onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
+          Previous
+        </Pagination.Prev>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <Pagination.Item
+            key={index + 1}
+            active={index + 1 === currentPage}
+            onClick={() => paginate(index + 1)}
+          >
+            {index + 1}
+          </Pagination.Item>
+        ))}
         <Pagination.Next onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
           Next
         </Pagination.Next>
@@ -287,7 +297,9 @@ function ProductsCard() {
         </Modal.Footer>
       </Modal>
 
-      {/* Floating Toast Notification */ }
+
+
+      {/*  Notification */}
       <ToastContainer position="bottom-end" className="p-3" style={{ zIndex: 9999 }}>
         <Toast show={showToast} onClose={() => setShowToast(false)} bg={toastVariant} delay={2000} autohide>
           <Toast.Header>
