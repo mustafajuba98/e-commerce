@@ -6,8 +6,8 @@ import {
 } from "../actions/actions";
 
 const getUserData = (key, username) => {
-  if (!username) return [];
-  const data = JSON.parse(localStorage.getItem(`${key}_${username}`));
+  const storageKey = `${key}_${username || "guest"}`;
+  const data = JSON.parse(localStorage.getItem(storageKey));
   return data ? data : [];
 };
 
@@ -34,30 +34,46 @@ export const cartReducer = (state = initialState.cart, action) => {
       localStorage.setItem(`cart_${username}`, JSON.stringify(updatedState[username]));
       return updatedState;
 
+    case "CLEAR_CART":
+      updatedState[action.payload] = [];
+      localStorage.setItem(`cart_${action.payload}`, JSON.stringify([]));
+      return updatedState;
+
     default:
-      return { ...state, [username]: getUserData("cart", username) };
+      return state[username] ? state : { ...state, [username]: getUserData("cart", username) };
   }
 };
 
 // Wishlist Reducer
 export const wishlistReducer = (state = initialState.wishlist, action) => {
-  const username = JSON.parse(localStorage.getItem("loginSession"))?.username;
-  if (!username) return state;
-
+  const username = JSON.parse(localStorage.getItem("loginSession"))?.username || "guest";
   let updatedState = { ...state };
 
   switch (action.type) {
     case ADD_TO_WISHLIST:
-      updatedState[username] = [...(state[username] || []), action.payload];
-      localStorage.setItem(`wishlist_${username}`, JSON.stringify(updatedState[username]));
-      return updatedState;
+      const updatedWishlist = [...(state[username] || []), action.payload];
+
+      updatedState[username] = updatedWishlist;
+      localStorage.setItem(`wishlist_${username}`, JSON.stringify(updatedWishlist));
+
+      return { ...updatedState }; // Ensure Redux updates
 
     case REMOVE_FROM_WISHLIST:
-      updatedState[username] = (state[username] || []).filter(item => item.id !== action.payload);
+      updatedState[username] = (state[username] || []).filter(item => item.id !== action.payload.id);
       localStorage.setItem(`wishlist_${username}`, JSON.stringify(updatedState[username]));
-      return updatedState;
+      return { ...updatedState };
+
+    case "CLEAR_WISHLIST":
+      updatedState[username] = [];
+      localStorage.setItem(`wishlist_${username}`, JSON.stringify([]));
+      return { ...updatedState };
+
+    case "LOAD_WISHLIST":
+      return { ...state, [username]: action.payload.items };
 
     default:
-      return { ...state, [username]: getUserData("wishlist", username) };
+      return state[username]
+        ? state
+        : { ...state, [username]: getUserData("wishlist", username) };
   }
 };

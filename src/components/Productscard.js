@@ -1,41 +1,103 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, Button, Row, Col, Container, Pagination, Alert } from "react-bootstrap";
+import { Card, Button, Row, Col, Container, Pagination, Toast, ToastContainer, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToCart, addToWishlist } from "../actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, ADD_TO_WISHLIST } from "../actions/actions";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import { useSearch } from "../reducers/searchContext";
 
 function ProductsCard() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [confirmationMessage, setConfirmationMessage] = useState(null); // State for messages
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastVariant, setToastVariant] = useState("success");
+  const [showToast, setShowToast] = useState(false);
+  const [username, setUsername] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const productsPerPage = 8;
   const dispatch = useDispatch();
   const { searchTerm } = useSearch();
+
+  const userKey = username || "guest"; // Use guest if not logged in
+  const wishlist = useSelector((state) => state.wishlist[userKey] || []);
+  const cart = useSelector((state) => state.cart[username] || []);
 
   useEffect(() => {
     axios
       .get("https://salesprogrow.com/products/")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
+
+    const sessionData = localStorage.getItem("loginSession");
+    if (sessionData) {
+      try {
+        const parsedSession = JSON.parse(sessionData);
+        setUsername(parsedSession.username);
+      } catch (error) {
+        console.error("Error parsing login session:", error);
+      }
+    }
   }, []);
 
-  const showConfirmation = (message) => {
-    setConfirmationMessage(message);
-    setTimeout(() => setConfirmationMessage(null), 2000); // Hide after 2 seconds
+  const showToastNotification = (message, variant = "success") => {
+    setToastMessage(message);
+    setToastVariant(variant);
+    setShowToast(true);
+
+    setTimeout(() => {
+      setShowToast(false);
+    }, 2000);
   };
 
   const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-    showConfirmation(`${product.title} added to cart!`);
+    if (!username) {
+      setShowModal(true);
+      return;
+    }
+
+    const productExists = cart.some((item) => item.id === product.id);
+
+    if (productExists) {
+      showToastNotification(`${product.title} is already in your cart!`, "danger");
+    } else {
+      dispatch(addToCart(product));
+      showToastNotification(`${product.title} added to cart!`, "success");
+    }
   };
 
   const handleAddToWishlist = (product) => {
-    dispatch(addToWishlist(product));
-    showConfirmation(`${product.title} added to wishlist!`);
+    const username = JSON.parse(localStorage.getItem("loginSession"))?.username || "guest";
+
+    // Check Redux store first
+    const productExists = wishlist.some((item) => item.id === product.id);
+
+    if (productExists) {
+      showToastNotification(`${product.title} is already in your wishlist!`, "warning");
+      return;
+    }
+
+    // Dispatch action
+    dispatch({
+      type: ADD_TO_WISHLIST,
+      payload: {
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+      },
+    });
+
+    // Update localStorage
+    const existingWishlist = JSON.parse(localStorage.getItem(`wishlist_${username}`)) || [];
+    const updatedWishlist = [...existingWishlist, product];
+    localStorage.setItem(`wishlist_${username}`, JSON.stringify(updatedWishlist));
+
+    showToastNotification(`${product.title} added to wishlist!`, "success");
   };
+
+
+  const handleCloseModal = () => setShowModal(false);
 
   const filteredProducts = products.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -50,13 +112,9 @@ function ProductsCard() {
 
   return (
     <Container className="my-5 mb-5">
-      <h2 className="text-center mb-4">Our Products</h2>
+      {username && <h3 className="text-center mb-3">Hello, {username}!</h3>}
 
-      {confirmationMessage && (
-        <Alert variant="success" className="text-center">
-          {confirmationMessage}
-        </Alert>
-      )}
+      <h2 className="text-center mb-4">Our Products</h2>
 
       <Row className="g-4">
         {currentProducts.map((product) => (
@@ -74,6 +132,9 @@ function ProductsCard() {
                   {product.description}
                 </Card.Text>
                 <h5 className="text-primary">${product.price}</h5>
+                <h6>
+                  <span className="badge text-bg-warning w-25 mb-3">{product.stock}</span> Left in stock
+                </h6>
                 <div className="d-flex justify-content-between">
                   <Button variant="success" onClick={() => handleAddToCart(product)}>
                     <FaShoppingCart />
@@ -112,6 +173,32 @@ function ProductsCard() {
           </Pagination.Next>
         </Pagination>
       )}
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Login Required</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>You need to log in to add items to your cart.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+          <Link to="/login">
+            <Button variant="primary">Go to Login</Button>
+          </Link>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Floating Toast Notification */}
+      <ToastContainer position="bottom-end" className="p-3" style={{ zIndex: 9999 }}>
+        <Toast show={showToast} onClose={() => setShowToast(false)} bg={toastVariant} delay={2000} autohide>
+          <Toast.Header>
+            <strong className="me-auto">{toastVariant === "success" ? "Success" : "Warning"}</strong>
+          </Toast.Header>
+          <Toast.Body className="text-white">{toastMessage}</Toast.Body>
+        </Toast>
+      </ToastContainer>
+
     </Container>
   );
 }

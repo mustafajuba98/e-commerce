@@ -150,7 +150,7 @@ const RegisterForm = () => {
             showPasswordToggle
             onPasswordToggle={() => setPasswordVisible(!passwordVisible)}
           />
-         <br />
+        <br />
           <InputField
             label="Confirm Password"
             type={confirmPasswordVisible ? "text" : "password"}

@@ -11,7 +11,7 @@ function AdminBtn({ text, color, productId, onDelete }) {
 			.delete(`https://salesprogrow.com/products/${productId}`)
 			.then(() => {
 				if (onDelete) onDelete(productId);
-				setShowModal(false); // Close modal after successful deletion
+				setShowModal(false);
 			})
 			.catch((err) => console.log(err));
 	}
