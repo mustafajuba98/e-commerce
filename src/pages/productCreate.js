@@ -27,12 +27,12 @@ function ProductCreate() {
 
 
 	useEffect(() => {
-		const userData = JSON.parse(localStorage.getItem("userData"));
-
-		// if (!userData || !userData.isAdmin) {
-		// 	history.push("/login");
-		// }
-	}, []);
+		const loginSession = JSON.parse(localStorage.getItem("loginSession"));
+		if (!loginSession || !loginSession.isAdmin) {
+			history.push("/login");
+			return;
+		}
+	}, [history]);
 
 	function handleForm(event) {
 		const { name, value } = event.target;
@@ -88,87 +88,89 @@ function ProductCreate() {
 			})
 			.then((response) => {
 				setNewProduct(response.data);
-				history.push("/admin/products");
+				history.push("/admin");
 			})
 			.catch((err) => console.log(err));
 	}
 
 	return (
-		<div className="row">
-			<div className="col-6 offset-2">
-				<form onSubmit={addProduct}>
-					<div className="card mb-4">
-						<h5 className="card-header">Add a new product</h5>
-						<div className="card-body">
-							<TextInput
-								handleForm={handleForm}
-								label={"Title"} 
-								name={"title"} 
-								error={errors.titleError} 
-								value={productData.title} 
-								type={"text"}
-								placeholder={"Green Avocado"} 
-							/>
+		<div className="container p-5">
+			<div className="row">
+				<div className="col-6 offset-2">
+					<form onSubmit={addProduct}>
+						<div className="card mb-4">
+							<h5 className="card-header">Add a new product</h5>
+							<div className="card-body">
+								<TextInput
+									handleForm={handleForm}
+									label={"Title"} 
+									name={"title"} 
+									error={errors.titleError} 
+									value={productData.title} 
+									type={"text"}
+									placeholder={"Green Avocado"} 
+								/>
 
-							<TextInput
-								handleForm={handleForm}
-								label={"Description"}
-								name={"description"}
-								error={errors.descError}
-								value={productData.description}
-								type={"textArea"}
-								placeholder={""}
-							/>
+								<TextInput
+									handleForm={handleForm}
+									label={"Description"}
+									name={"description"}
+									error={errors.descError}
+									value={productData.description}
+									type={"textArea"}
+									placeholder={""}
+								/>
 
-							<TextInput
-								handleForm={handleForm}
-								label={"Cateogry"}
-								name={"category"}
-								error={errors.categoryError}
-								value={productData.category}
-								type={"text"}
-								placeholder={"Fruits"}
-							/>
+								<TextInput
+									handleForm={handleForm}
+									label={"Cateogry"}
+									name={"category"}
+									error={errors.categoryError}
+									value={productData.category}
+									type={"text"}
+									placeholder={"Fruits"}
+								/>
 
-							<TextInput
-								handleForm={handleForm}
-								label={"Price"}
-								name={"price"}
-								error={errors.price}
-								value={productData.price}
-								type={"number"}
-								placeholder={"22.5"}
-							/>
+								<TextInput
+									handleForm={handleForm}
+									label={"Price"}
+									name={"price"}
+									error={errors.price}
+									value={productData.price}
+									type={"number"}
+									placeholder={"22.5"}
+								/>
 
-							<TextInput
-								handleForm={handleForm}
-								label={"Stock"}
-								name={"stock"}
-								error={errors.stockError}
-								value={productData.stock}
-								type={"number"}
-								placeholder={"34"}
-							/>
+								<TextInput
+									handleForm={handleForm}
+									label={"Stock"}
+									name={"stock"}
+									error={errors.stockError}
+									value={productData.stock}
+									type={"number"}
+									placeholder={"34"}
+								/>
 
-							<TextInput
-								handleForm={handleForm}
-								label={"Image Url"}
-								name={"image"}
-								error={errors.imageError}
-								value={productData.image}
-								type={"text"}
-							/>
+								<TextInput
+									handleForm={handleForm}
+									label={"Image Url"}
+									name={"image"}
+									error={errors.imageError}
+									value={productData.image}
+									type={"text"}
+								/>
 
+							</div>
+							<button 
+								type="submit" 
+								className="btn btn-success"
+								disabled={!formValid}
+							>
+								Add
+							</button>
 						</div>
-						<button 
-							type="submit" 
-							className="btn btn-success"
-							disabled={!formValid}
-						>
-							Add
-						</button>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
 	);

@@ -16,6 +16,7 @@ import RegisterForm from "./pages/register";
 import ProductCreate from "./pages/productCreate";
 import ProductUpdate from "./pages/productUpdate";
 import { SearchProvider } from "./reducers/searchContext";
+import Wishlist from "./pages/wishlist";
 
 
 function App() {
@@ -35,17 +36,15 @@ function App() {
           <Route exact path="/category/:categoryName" component={Category} />
           <Route exact path="/Login" component={LoginForm} />
           <Route exact path="/register" component={RegisterForm} />
-
+          <Route exact path="/cart" component={ShoppingCart} />
+          <Route exact path="/wishlist" component={Wishlist} />
           <Route exact path="/offers" component={Offers} />
-          {/* <Route exact path="/addedtocart" component={addedtocart} /> */}
           <Route component={NotFound} />
         </Switch>
 
         <Footer />
       </BrowserRouter>
     </SearchProvider>
-
-
 
   );
 }

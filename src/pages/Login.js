@@ -54,8 +54,7 @@ const LoginForm = () => {
       return;
     }
 
-    // Store loginSession in localStorage
-    localStorage.setItem("loginSession", JSON.stringify({ username: user.username }));
+    localStorage.setItem("loginSession", JSON.stringify({ username: user.username, isAdmin: user.isAdmin }));
 
     setSnackbarMessage("Login successful!");
     setAlertVariant("success");

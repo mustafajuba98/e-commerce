@@ -45,6 +45,7 @@ function ProductsTable() {
 						<thead>
 							<tr>
 								<th scope="col">Name</th>
+								<th scope="col">Image</th>
 								<th scope="col">Price</th>
 								<th scope="col">Category</th>
 								<th scope="col">Update</th>
@@ -54,8 +55,11 @@ function ProductsTable() {
 						<tbody>
 							{currentProducts.map((product) => (
 								<tr key={product.id}>
-									<td>
+									<td style={{ maxWidth: "300px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
 										<Link to={`/products/${product.id}`}>{product.title}</Link>
+									</td>
+									<td>
+										<img src={product.image} width="50" height="50" alt="" />
 									</td>
 									<td>{product.price}$</td>
 									<td>{product.category}</td>

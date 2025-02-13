@@ -75,7 +75,7 @@ function ProductUpdate() {
 				image,
 			})
 			.then(() => {
-				history.push("/admin/products"); // Redirect after successful update
+				history.push("/admin"); // Redirect after successful update
 			})
 			.catch((err) => console.log(err));
 	}
