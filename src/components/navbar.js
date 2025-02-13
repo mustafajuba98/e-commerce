@@ -4,10 +4,9 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
-import { useSearch } from "../reducers/searchContext"; // استيراد الكونسيت
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { useSearch } from "../reducers/searchContext"; 
 import { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector } from "react-redux";
 
 
@@ -76,20 +75,6 @@ function NavScrollExample() {
               </span>
             </Nav.Link>
 
-            {location.pathname === "/products" && (
-              <NavDropdown title="Categories" id="navbarScrollingDropdown" className="active fs-5">
-                <NavDropdown.Item as={Link} to="/category/electronics" className="active fs-5">
-                  Electronics
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/category/clothing" className="active fs-5">
-                  Clothing
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to="/offers" className="active fs-5">
-                  Special Offers
-                </NavDropdown.Item>
-              </NavDropdown>
-            )}
           </Nav>
 
           {location.pathname === "/products" && (
@@ -131,3 +116,5 @@ function NavScrollExample() {
 }
 
 export default NavScrollExample;
+
+

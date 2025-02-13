@@ -21,31 +21,31 @@ import Wishlist from "./pages/wishlist";
 
 function App() {
   return (
-    <BrowserRouter>
     <SearchProvider>
-      <Navbar />
+      <BrowserRouter>
+        <Navbar />
 
-      <Switch>
-        <Route exact path="/" component={Home} />
-          <Route path="/admin" component={ProductsTable} exact />
-        {/* <Route path="/admin/products" component={ProductsTable} exact /> */}
-        <Route exact path="/products" component={Products} />
-        <Route exact path="/products/create" component={ProductCreate} />
-        <Route path="/products/update/:id" component={ProductUpdate} />
-        <Route exact path="/products/:id" component={ProductDetails} />
-        <Route exact path="/category/:categoryName" component={Category} />
-        <Route exact path="/Login" component={LoginForm} />
-        <Route exact path="/register" component={RegisterForm} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/admin" component={AdminPanel} exact />
+          <Route path="/admin/products" component={ProductsTable} exact />
+          <Route exact path="/products" component={Products} />
+          <Route exact path="/products/create" component={ProductCreate} />
+          <Route path="/products/update/:id" component={ProductUpdate} />
+          <Route exact path="/products/:id" component={ProductDetails} />
+          <Route exact path="/category/:categoryName" component={Category} />
+          <Route exact path="/Login" component={LoginForm} />
+          <Route exact path="/register" component={RegisterForm} />
+          <Route exact path="/cart" component={ShoppingCart} />
+          <Route exact path="/wishlist" component={Wishlist} />
+          <Route exact path="/offers" component={Offers} />
+          <Route component={NotFound} />
+        </Switch>
 
-        <Route exact path="/offers" component={Offers} />
-        <Route exact path="/cart" component={ShoppingCart} />
-        <Route exact path="/wishlist" component={Wishlist} />
-        <Route component={NotFound} />
-      </Switch>
+        <Footer />
+      </BrowserRouter>
+    </SearchProvider>
 
-      <Footer />
-      </SearchProvider>
-    </BrowserRouter>
   );
 }
 
