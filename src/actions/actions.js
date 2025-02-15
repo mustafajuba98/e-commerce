@@ -24,7 +24,6 @@ export const removeFromWishlist = (id) => ({
   payload: id,
 });
 
-// New action creator for clearing wishlist
 export const clearWishlist = () => ({
   type: CLEAR_WISHLIST,
 });
